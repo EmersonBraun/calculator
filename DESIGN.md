@@ -21,15 +21,19 @@ recovery, not decoration.
 
 ## Composition
 
-One responsive page: a quiet header, a short explanatory hero, then the
-calculator work surface. On desktop the operation rail and form share a clear
-grid; on mobile they stack. Result and error states are announced accessibly.
+One responsive page: a quiet header, a short explanatory hero, then a focused
+calculator surface with a large display and familiar four-column keypad. The
+required operations are visible at a glance; power and square root sit in a
+small scientific strip below the primary controls. Result and error states are
+announced accessibly.
 
 ## Interaction rules
 
-- Show exactly the operands needed by the selected operation.
-- Keep labels visible; placeholders never carry meaning alone.
-- Disable submission only while a request is in flight.
-- Use inline validation and preserve values after API failures.
+- Keep the display and keypad behavior familiar: clear, backspace, sign,
+  decimal, chained binary operations, and equals.
+- Submit each confirmed operation to the Go API; never calculate a different
+  result locally and silently replace the service result.
+- Disable controls only while a request is in flight.
+- Use inline validation and preserve the current display after API failures.
 - Use CSS-only motion sparingly and honor `prefers-reduced-motion`.
 - Never use gradients, glassmorphism, gratuitous cards, or fake dashboard chrome.

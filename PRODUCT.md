@@ -8,9 +8,9 @@ behavior, clear failure states, and no unnecessary product surface.
 
 ## Job to be done
 
-Enter one or two decimal values, choose an operation, and receive a precise
-result from a real Go service. The UI should make unary versus binary operations
-obvious and make recovery from invalid input effortless.
+Enter values with a familiar calculator keypad, chain operations, and receive a
+precise result from a real Go service. The UI should make recovery from invalid
+input effortless.
 
 ## Success
 
