@@ -74,7 +74,7 @@ export default function App() {
 
   return <main className="calculator-page" aria-label="Traditional calculator">
     <section className="calculator-wrap" aria-label="Calculator work surface">
-      <div className="display-panel"><div className="expression" aria-hidden="true">{activeOperation || 'Ready'}</div><output className={`display ${displayScale}`} aria-label="Calculator display" aria-live="polite">{display}</output></div>
+      <div className="display-panel">{activeOperation && <div className="expression" aria-hidden="true">{activeOperation}</div>}<output className={`display ${displayScale}`} aria-label="Calculator display" aria-live="polite">{display}</output></div>
       <div className="keypad" aria-label="Calculator keypad">
         {button('⌫', backspace, 'utility backspace', 'Backspace')}{button('C', clear, 'utility', 'Clear calculator')}{button('%', () => void applyPercentage(), 'utility operator', 'Percentage')}{button('÷', () => chooseOperation('divide'), 'operator', 'Divide')}
         {button('7', () => inputDigit('7'))}{button('8', () => inputDigit('8'))}{button('9', () => inputDigit('9'))}{button('×', () => chooseOperation('multiply'), 'operator', 'Multiply')}
