@@ -21,11 +21,10 @@ recovery, not decoration.
 
 ## Composition
 
-One responsive page: a quiet header, a short explanatory hero, then a focused
-calculator surface with a large display and familiar four-column keypad. The
-required operations are visible at a glance; power and square root sit in a
-small scientific strip below the primary controls. Result and error states are
-announced accessibly.
+One responsive page centered on a focused calculator surface with a large
+display and familiar four-column keypad. The required operations are visible
+at a glance; power and square root sit in a small secondary strip below the
+primary controls. Result and error states are announced accessibly.
 
 ## Interaction rules
 

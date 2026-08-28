@@ -72,8 +72,6 @@ export default function App() {
   const button = (text: string, onClick: () => void, className = '', ariaLabel = text) => <button key={`${ariaLabel}-${text}`} type="button" className={`key ${className}`} onClick={onClick} aria-label={ariaLabel} disabled={busy}>{text}</button>;
 
   return <main className="calculator-page" aria-label="Traditional calculator">
-    <header className="topbar"><div className="brand"><span className="brand-mark">∑</span><span>Exact</span></div><span className="status"><i /> Local calculator</span></header>
-    <section className="intro"><p className="eyebrow">PRECISION, WITHOUT FRICTION</p><h1>A calmer way<br /><em>to calculate.</em></h1><p className="lede">Exact decimal arithmetic in a familiar, focused interface.</p></section>
     <section className="calculator-wrap" aria-label="Calculator work surface">
       <div className="display-panel"><div className="expression" aria-hidden="true">{activeOperation || 'Ready'}</div><output className="display" aria-label="Calculator display" aria-live="polite">{display}</output></div>
       <div className="keypad" aria-label="Calculator keypad">
@@ -83,10 +81,8 @@ export default function App() {
         {button('1', () => inputDigit('1'))}{button('2', () => inputDigit('2'))}{button('3', () => inputDigit('3'))}{button('+', () => chooseOperation('add'), 'operator', 'Add')}
         {button('±', toggleSign, 'utility', 'Toggle sign')}{button('0', () => inputDigit('0'))}{button('.', inputDecimal, 'decimal', 'Decimal point')}{button(busy ? '…' : '=', () => void equals(), 'equals', 'Equals')}
       </div>
-      <div className="scientific"><div className="scientific-heading"><span>Scientific</span><small>Optional operations · % is on the keypad</small></div><div className="scientific-keys">{(['power', 'sqrt'] as Operation[]).map((operation) => button(`${symbols[operation]}  ${labels[operation]}`, () => chooseOperation(operation), 'scientific-key', labels[operation]))}</div></div>
+      <div className="scientific" aria-label="Additional operations"><div className="scientific-keys">{(['power', 'sqrt'] as Operation[]).map((operation) => button(symbols[operation], () => chooseOperation(operation), 'scientific-key', labels[operation]))}</div></div>
       <div className={`feedback ${message ? 'visible' : ''}`} role="alert" aria-live="assertive">{message && <><span>!</span>{message}</>}</div>
-      <p className="contract-note">Exact decimal output · Every result is confirmed by the local API</p>
     </section>
-    <footer><span>Built for correctness.</span><span>Keyboard ready · API backed</span></footer>
   </main>;
 }
