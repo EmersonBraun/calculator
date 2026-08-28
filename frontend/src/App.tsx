@@ -69,7 +69,7 @@ export default function App() {
   });
 
   const activeOperation = pending ? `${stored ?? ''} ${symbols[pending]}${waiting ? '' : ` ${display}`}` : '';
-  const displayScale = display.length > 32 ? 'ultra-long' : display.length > 24 ? 'very-long' : display.length > 12 ? 'long' : '';
+  const displayScale = display.length > 40 ? 'ultra-long' : display.length > 24 ? 'very-long' : display.length > 17 ? 'long' : display.length > 12 ? 'medium' : '';
   const button = (text: string, onClick: () => void, className = '', ariaLabel = text) => <button key={`${ariaLabel}-${text}`} type="button" className={`key ${className}`} onClick={onClick} aria-label={ariaLabel} disabled={busy}>{text}</button>;
 
   return <main className="calculator-page" aria-label="Traditional calculator">

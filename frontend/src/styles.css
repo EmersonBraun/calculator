@@ -19,9 +19,10 @@ button { font: inherit; cursor: pointer; }
 .expression { min-height: 17px; overflow: hidden; color: #9ca8ae; text-align: right; text-overflow: ellipsis; font: 500 11px 'IBM Plex Mono', monospace; white-space: nowrap; }
 .display { display: block; overflow-x: auto; overflow-y: hidden; color: #f5f7f8; text-align: right; text-overflow: clip; font: 500 clamp(34px, 11vw, 54px)/1.05 'IBM Plex Mono', monospace; letter-spacing: -.08em; white-space: nowrap; scrollbar-width: none; }
 .display::-webkit-scrollbar { display: none; }
-.display.long { font-size: clamp(25px, 7.5vw, 38px); }
-.display.very-long { font-size: clamp(18px, 5.5vw, 27px); letter-spacing: -.06em; }
-.display.ultra-long { font-size: 14px; letter-spacing: -.05em; }
+.display.medium { font-size: 30px; letter-spacing: -.09em; }
+.display.long { font-size: 22px; letter-spacing: -.07em; }
+.display.very-long { font-size: 16px; letter-spacing: -.05em; }
+.display.ultra-long { font-size: 12px; letter-spacing: -.04em; }
 
 .keypad { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 9px; }
 .key { width: 100%; aspect-ratio: 1; min-height: 0; padding: 0; border: 1px solid #6d767c; border-radius: 50%; color: #f5f7f8; background: #596268; box-shadow: 0 2px 0 rgba(0, 0, 0, .18), inset 0 1px 0 rgba(255, 255, 255, .08); font: 500 clamp(17px, 5vw, 22px) 'IBM Plex Mono', monospace; transition: transform .1s, filter .1s; }
