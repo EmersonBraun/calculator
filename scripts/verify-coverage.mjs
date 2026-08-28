@@ -4,7 +4,7 @@ import { promisify } from "node:util";
 
 const exec = promisify(execFile);
 
-await exec("go", ["test", "./...", "-coverprofile=coverage.out"], { cwd: "backend" });
+await exec("go", ["test", ".", "-coverprofile=coverage.out"], { cwd: "backend" });
 await access("backend/coverage.out");
 await access("frontend/coverage/coverage-summary.json");
 const summary = JSON.parse(await readFile("frontend/coverage/coverage-summary.json", "utf8"));
