@@ -30,7 +30,7 @@ button { font: inherit; cursor: pointer; }
 .key:active:not(:disabled) { transform: scale(.95); }
 .key:focus-visible, .scientific-key:focus-visible { position: relative; z-index: 1; outline: 3px solid #8bb5ff; outline-offset: 3px; }
 .key.utility { color: #f0f3f4; border-color: #8e989d; background: #7a8388; font-size: clamp(15px, 4vw, 19px); }
-.key.backspace { font-size: clamp(23px, 6vw, 29px); }
+.key.backspace { font-family: Arial, sans-serif; font-size: 30px; line-height: 1; }
 .key.operator, .key.equals { border-color: #ffb21b; color: #fff; background: #f4a000; }
 .key.operator:hover:not(:disabled), .key.equals:hover:not(:disabled) { filter: brightness(1.1); }
 .key.decimal { font-size: clamp(22px, 6vw, 28px); }
