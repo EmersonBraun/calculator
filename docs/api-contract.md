@@ -47,6 +47,9 @@ point and sign. The service uses decimal arithmetic and returns a canonical
 non-exponential decimal string without unnecessary trailing fractional zeroes
 (`0` rather than `0.0`).
 
+Square roots are rounded to at most 64 fractional decimal places using
+round-to-nearest-even. Exact roots are returned without trailing zeroes.
+
 ## Errors
 
 All client errors use this envelope:

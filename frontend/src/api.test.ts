@@ -11,7 +11,7 @@ describe('client contract boundary', () => {
   ] as const)('sends the optional %s operation with exact string operands', async (operation, operands) => {
     const fetchMock = vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response(JSON.stringify({ result: operation === 'sqrt' ? '3' : '8' }), { status: 200 }));
     await calculate(operation, [...operands]);
-    expect(fetchMock).toHaveBeenCalledWith('http://localhost:8080/api/calculate', expect.objectContaining({
+    expect(fetchMock).toHaveBeenCalledWith('/api/calculate', expect.objectContaining({
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ operation, operands })
     }));

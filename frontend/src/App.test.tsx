@@ -22,8 +22,32 @@ describe('traditional calculator', () => {
     await user.click(screen.getByRole('button', { name: '4' }));
     await user.click(screen.getByRole('button', { name: 'Equals' }));
     await waitFor(() => expect(screen.getByLabelText('Calculator display')).toHaveTextContent('20'));
-    expect(fetchMock).toHaveBeenNthCalledWith(1, 'http://localhost:8080/api/calculate', expect.objectContaining({ body: JSON.stringify({ operation: 'add', operands: ['2', '3'] }) }));
-    expect(fetchMock).toHaveBeenNthCalledWith(2, 'http://localhost:8080/api/calculate', expect.objectContaining({ body: JSON.stringify({ operation: 'multiply', operands: ['5', '4'] }) }));
+    expect(fetchMock).toHaveBeenNthCalledWith(1, '/api/calculate', expect.objectContaining({ body: JSON.stringify({ operation: 'add', operands: ['2', '3'] }) }));
+    expect(fetchMock).toHaveBeenNthCalledWith(2, '/api/calculate', expect.objectContaining({ body: JSON.stringify({ operation: 'multiply', operands: ['5', '4'] }) }));
+  });
+
+  it('evaluates consecutive operations with immediate calculator semantics', async () => {
+    const fetchMock = vi.spyOn(globalThis, 'fetch')
+      .mockResolvedValueOnce(new Response(JSON.stringify({ result: '5' }), { status: 200 }))
+      .mockResolvedValueOnce(new Response(JSON.stringify({ result: '20' }), { status: 200 }));
+    const user = userEvent.setup();
+    render(<App />);
+    for (const key of ['2', 'Add', '3', 'Multiply', '4', 'Equals']) await user.click(screen.getByRole('button', { name: key }));
+    await waitFor(() => expect(screen.getByLabelText('Calculator display')).toHaveTextContent('20'));
+    expect(fetchMock).toHaveBeenNthCalledWith(1, '/api/calculate', expect.objectContaining({ body: JSON.stringify({ operation: 'add', operands: ['2', '3'] }) }));
+    expect(fetchMock).toHaveBeenNthCalledWith(2, '/api/calculate', expect.objectContaining({ body: JSON.stringify({ operation: 'multiply', operands: ['5', '4'] }) }));
+  });
+
+  it('replaces a pending operator and repeats the last operation on equals', async () => {
+    const fetchMock = vi.spyOn(globalThis, 'fetch')
+      .mockResolvedValueOnce(new Response(JSON.stringify({ result: '8' }), { status: 200 }))
+      .mockResolvedValueOnce(new Response(JSON.stringify({ result: '11' }), { status: 200 }));
+    const user = userEvent.setup();
+    render(<App />);
+    for (const key of ['5', 'Add', 'Multiply', '3', 'Equals', 'Equals']) await user.click(screen.getByRole('button', { name: key }));
+    await waitFor(() => expect(screen.getByLabelText('Calculator display')).toHaveTextContent('11'));
+    expect(fetchMock).toHaveBeenNthCalledWith(1, '/api/calculate', expect.objectContaining({ body: JSON.stringify({ operation: 'multiply', operands: ['5', '3'] }) }));
+    expect(fetchMock).toHaveBeenNthCalledWith(2, '/api/calculate', expect.objectContaining({ body: JSON.stringify({ operation: 'multiply', operands: ['8', '3'] }) }));
   });
 
   it('supports keyboard digits, operators, enter, backspace, escape and sign toggle', async () => {
@@ -36,7 +60,7 @@ describe('traditional calculator', () => {
     await user.keyboard('3');
     await user.keyboard('{Enter}');
     await waitFor(() => expect(screen.getByLabelText('Calculator display')).toHaveTextContent('-2'));
-    expect(fetchMock).toHaveBeenCalledWith('http://localhost:8080/api/calculate', expect.objectContaining({ body: JSON.stringify({ operation: 'subtract', operands: ['1', '3'] }) }));
+    expect(fetchMock).toHaveBeenCalledWith('/api/calculate', expect.objectContaining({ body: JSON.stringify({ operation: 'subtract', operands: ['1', '3'] }) }));
     await user.keyboard('4');
     expect(screen.getByLabelText('Calculator display')).toHaveTextContent('4');
     await user.click(screen.getByRole('button', { name: 'Toggle sign' }));
@@ -53,7 +77,7 @@ describe('traditional calculator', () => {
     await user.click(screen.getByRole('button', { name: 'Square root' }));
     await user.click(screen.getByRole('button', { name: 'Equals' }));
     await waitFor(() => expect(screen.getByLabelText('Calculator display')).toHaveTextContent('3'));
-    expect(fetchMock).toHaveBeenCalledWith('http://localhost:8080/api/calculate', expect.objectContaining({ body: JSON.stringify({ operation: 'sqrt', operands: ['9'] }) }));
+    expect(fetchMock).toHaveBeenCalledWith('/api/calculate', expect.objectContaining({ body: JSON.stringify({ operation: 'sqrt', operands: ['9'] }) }));
     await user.click(screen.getByRole('button', { name: 'Clear calculator' }));
     expect(screen.getByLabelText('Calculator display')).toHaveTextContent('0');
   });
@@ -68,8 +92,8 @@ describe('traditional calculator', () => {
     await user.click(screen.getByRole('button', { name: 'Percentage' }));
     await user.click(screen.getByRole('button', { name: 'Equals' }));
     await waitFor(() => expect(screen.getByLabelText('Calculator display')).toHaveTextContent('220'));
-    expect(fetchMock).toHaveBeenNthCalledWith(1, 'http://localhost:8080/api/calculate', expect.objectContaining({ body: JSON.stringify({ operation: 'percentage', operands: ['10', '200'] }) }));
-    expect(fetchMock).toHaveBeenNthCalledWith(2, 'http://localhost:8080/api/calculate', expect.objectContaining({ body: JSON.stringify({ operation: 'add', operands: ['200', '20'] }) }));
+    expect(fetchMock).toHaveBeenNthCalledWith(1, '/api/calculate', expect.objectContaining({ body: JSON.stringify({ operation: 'percentage', operands: ['10', '200'] }) }));
+    expect(fetchMock).toHaveBeenNthCalledWith(2, '/api/calculate', expect.objectContaining({ body: JSON.stringify({ operation: 'add', operands: ['200', '20'] }) }));
   });
 
   it('shows inline API errors and preserves the display', async () => {

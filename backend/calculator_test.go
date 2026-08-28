@@ -98,3 +98,17 @@ func TestCalculateRejectsOversizedOperandsAndResults(t *testing.T) {
 		t.Errorf("oversized result error = %v; want %v", err, errResultTooLarge)
 	}
 }
+
+func TestSquareRootSupportsTheDocumentedDecimalRange(t *testing.T) {
+	tests := []struct{ input, want string }{
+		{"0.0000000000000001", "0.00000001"},
+		{"0." + strings.Repeat("0", 123) + "1", "0." + strings.Repeat("0", 61) + "1"},
+		{"2", "1.414213562373095048801688724209698078569671875376948073176679738"},
+	}
+	for _, tt := range tests {
+		got, err := calculate("sqrt", []string{tt.input})
+		if err != nil || got != tt.want {
+			t.Errorf("sqrt(%s) = %q, %v; want %q", tt.input, got, err, tt.want)
+		}
+	}
+}

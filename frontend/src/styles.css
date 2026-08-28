@@ -1,10 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;600&family=IBM+Plex+Mono:wght@500;600&display=swap');
-
 :root {
   --key-label-size: clamp(18px, 4.8vw, 21px);
   --icon-size: 28px;
   --secondary-label-size: 14px;
-  font-family: 'DM Sans', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   color: #f4f6f7;
   background: #e9edef;
   font-synthesis: none;
@@ -23,9 +21,9 @@ button { font: inherit; cursor: pointer; }
   background: #22282c;
   box-shadow: 0 24px 55px rgba(25, 33, 40, .22), 0 2px 0 rgba(255, 255, 255, .2) inset;
 }
-.display-panel { min-height: 104px; padding: 6px 7px 19px; display: flex; flex-direction: column; justify-content: flex-end; }
-.expression { min-height: 17px; overflow: hidden; color: #9ca8ae; text-align: right; text-overflow: ellipsis; font: 500 11px 'IBM Plex Mono', monospace; white-space: nowrap; }
-.display { display: block; overflow-x: auto; overflow-y: hidden; padding: 3px 0 2px; color: #f5f7f8; text-align: right; text-overflow: clip; font: 500 clamp(34px, 11vw, 54px)/1.25 'IBM Plex Mono', monospace; letter-spacing: -.08em; white-space: nowrap; scrollbar-width: none; }
+.display-panel { height: 104px; padding: 6px 7px 19px; display: flex; flex-direction: column; justify-content: flex-end; }
+.expression { min-height: 17px; overflow: hidden; color: #9ca8ae; text-align: right; text-overflow: ellipsis; font: 500 11px ui-monospace, SFMono-Regular, Menlo, monospace; white-space: nowrap; }
+.display { display: block; overflow-x: auto; overflow-y: hidden; padding: 3px 10px 2px 0; color: #f5f7f8; text-align: right; text-overflow: clip; font: 500 clamp(34px, 11vw, 54px)/1.25 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: -.08em; white-space: nowrap; scrollbar-width: none; }
 .display::-webkit-scrollbar { display: none; }
 .display.medium { font-size: 30px; letter-spacing: -.09em; }
 .display.long { font-size: 22px; letter-spacing: -.07em; }
@@ -33,7 +31,7 @@ button { font: inherit; cursor: pointer; }
 .display.ultra-long { font-size: 12px; letter-spacing: -.04em; }
 
 .keypad { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 9px; }
-.key { width: 100%; aspect-ratio: 1; min-height: 0; padding: 0; border: 1px solid #6d767c; border-radius: 50%; color: #f5f7f8; background: #596268; box-shadow: 0 2px 0 rgba(0, 0, 0, .18), inset 0 1px 0 rgba(255, 255, 255, .08); font: 500 var(--key-label-size) 'IBM Plex Mono', monospace; transition: transform .1s, filter .1s; }
+.key { width: 100%; aspect-ratio: 1; min-height: 0; padding: 0; border: 1px solid #6d767c; border-radius: 50%; color: #f5f7f8; background: #596268; box-shadow: 0 2px 0 rgba(0, 0, 0, .18), inset 0 1px 0 rgba(255, 255, 255, .08); font: 500 var(--key-label-size) ui-monospace, SFMono-Regular, Menlo, monospace; transition: transform .1s, filter .1s; }
 .key:hover:not(:disabled) { filter: brightness(1.12); }
 .key:active:not(:disabled) { transform: scale(.95); }
 .key:focus-visible, .scientific-key:focus-visible { position: relative; z-index: 1; outline: 3px solid #8bb5ff; outline-offset: 3px; }
@@ -46,7 +44,7 @@ button { font: inherit; cursor: pointer; }
 
 .scientific { margin-top: 16px; padding-top: 13px; border-top: 1px solid #3a4348; }
 .scientific-keys { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
-.scientific-key { aspect-ratio: auto; height: 34px; min-height: 34px; padding: 0 8px; border: 1px solid #4d595f; border-radius: 9px; color: #dae1e4; background: #30383d; font: 500 var(--secondary-label-size) 'IBM Plex Mono', monospace; }
+.scientific-key { aspect-ratio: auto; height: 34px; min-height: 34px; padding: 0 8px; border: 1px solid #4d595f; border-radius: 9px; color: #dae1e4; background: #30383d; font: 500 var(--secondary-label-size) ui-monospace, SFMono-Regular, Menlo, monospace; }
 .scientific-key:hover:not(:disabled) { background: #3b454b; }
 .feedback { min-height: 0; margin-top: 9px; color: #ffb7ac; font-size: 12px; line-height: 1.4; }
 .feedback.visible { min-height: 20px; display: flex; align-items: flex-start; gap: 7px; }
@@ -55,7 +53,7 @@ button { font: inherit; cursor: pointer; }
 @media (max-width: 380px) {
   .calculator-page { padding: 10px; }
   .calculator-wrap { padding: 14px 12px 13px; border-radius: 22px; }
-  .display-panel { min-height: 88px; padding-bottom: 14px; }
+  .display-panel { height: 88px; padding-bottom: 14px; }
   .keypad { gap: 7px; }
   .scientific { margin-top: 12px; padding-top: 10px; }
 }
@@ -63,7 +61,7 @@ button { font: inherit; cursor: pointer; }
 @media (max-height: 620px) {
   .calculator-page { padding: 8px; }
   .calculator-wrap { padding: 10px 11px 10px; }
-  .display-panel { min-height: 76px; padding-bottom: 11px; }
+  .display-panel { height: 76px; padding-bottom: 11px; }
   .keypad { gap: 5px; }
   .scientific { margin-top: 9px; padding-top: 8px; }
   .scientific-key { height: 28px; min-height: 28px; }

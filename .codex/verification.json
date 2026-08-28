@@ -8,7 +8,12 @@
     "outcomes": [
       { "id": "logic", "statement": "Exact calculator behavior and stable error handling are covered by deterministic tests.", "checks": ["logic-check", "backend-tests", "frontend-tests", "coverage"] },
       { "id": "endpoint", "statement": "The real Go service responds to health and calculation requests with the documented contract.", "checks": ["endpoint-smoke"] },
-      { "id": "ui", "statement": "The real browser flow is checked at mobile and desktop sizes and awaits human visual approval.", "checks": ["browser-review"] },
+      { "id": "ui-display", "statement": "The calculator display renders every glyph inside safe visible bounds.", "checks": ["browser-review"] },
+      { "id": "ui-typography", "statement": "Calculator key typography is consistent and the backspace icon remains legible.", "checks": ["browser-review"] },
+      { "id": "ui-responsive", "statement": "The calculator fits mobile, tablet, and desktop viewports without page overflow.", "checks": ["browser-review"] },
+      { "id": "ui-targets", "statement": "Interactive calculator keys retain accessible target sizes.", "checks": ["browser-review"] },
+      { "id": "ui-interaction", "statement": "The real browser uses the Go API for calculation, chaining, validation, API failure recovery, and keyboard navigation.", "checks": ["browser-review"] },
+      { "id": "ui-runtime", "statement": "The browser flow has no page, console, or unexpected network errors.", "checks": ["browser-review"] },
       { "id": "delivery", "statement": "The application builds and starts through Docker with frontend-to-API wiring.", "checks": ["builds", "docker-smoke"] },
       { "id": "docs", "statement": "The approved scope, contract, design, threat model, decisions, and AI prompt log are present and consistent.", "checks": ["docs-check", "diff-clean"] }
     ]
@@ -30,7 +35,7 @@
     { "id": "builds", "category": "build", "command": "cd backend && go vet ./... && cd ../frontend && npm run typecheck && npm run build", "timeoutMs": 240000 },
     { "id": "endpoint-smoke", "category": "endpoint", "execution": "real", "command": "node scripts/verify-endpoint.mjs", "timeoutMs": 120000 },
     { "id": "docker-smoke", "category": "endpoint", "execution": "real", "command": "node scripts/verify-docker.mjs", "timeoutMs": 240000 },
-    { "id": "browser-review", "category": "ui", "execution": "real", "command": "node scripts/browser-evidence.mjs", "timeoutMs": 180000 },
+    { "id": "browser-review", "category": "ui", "execution": "real", "capabilities": ["real-browser", "screenshot"], "command": "node scripts/browser-evidence.mjs", "timeoutMs": 180000 },
     { "id": "docs-check", "category": "docs", "command": "node scripts/verify-docs.mjs", "timeoutMs": 30000 },
     { "id": "diff-clean", "category": "custom", "command": "git diff --check", "timeoutMs": 30000 }
   ],

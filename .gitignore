@@ -9,4 +9,5 @@ backend/bin/
 .codex/verification/runs/
 .codex/verification/latest.json
 .codex/verification/tmp/
+.codex/verification/ui/
 .DS_Store

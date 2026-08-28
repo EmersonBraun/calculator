@@ -7,7 +7,7 @@ stateless and uses decimal strings at the boundary so values such as `0.1 +
 
 ## Run locally
 
-Requirements: Go 1.23+, Node.js 22+, and npm.
+Requirements: Go 1.22+, Node.js 22+, and npm.
 
 ```bash
 cd backend
@@ -53,11 +53,15 @@ The complete request, response, operation, decimal, and error contract is in
 cd backend && gofmt -w . && go test ./... && go vet ./...
 cd frontend && npm test -- --run --coverage && npm run typecheck && npm run build
 cd .. && node scripts/verify-docs.mjs
+node scripts/browser-evidence.mjs
 ```
 
 Coverage is measured independently for the Go and TypeScript layers. The
 target is at least 90% statements per layer. The final harness also checks the
 real endpoint, Docker wiring, and a real-browser review.
+
+The browser check requires Playwright's Chromium binary. From `frontend`, run
+`npx playwright install chromium` once if it is not already available.
 
 ## Decisions and limits
 
@@ -69,6 +73,11 @@ and [`PRODUCT.md`](./PRODUCT.md). Architectural trade-offs are recorded in
 There is intentionally no database, auth, history, payment processing, LLM,
 agent runtime, or cloud deployment. These would add scope without supporting
 the requested calculator behavior.
+
+Assumptions: arithmetic follows immediate-execution calculator semantics;
+operands are decimal strings up to 128 characters; powers accept integer
+exponents from −100 to 100; square roots return up to 64 fractional places.
+The calculator is designed for one user in a browser and stores no data.
 
 ## AI-assisted work
 

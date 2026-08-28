@@ -2,7 +2,9 @@ package calculator
 
 import (
 	"errors"
+	"math/big"
 	"regexp"
+	"strings"
 
 	"github.com/shopspring/decimal"
 )
@@ -113,13 +115,12 @@ func squareRoot(value decimal.Decimal) decimal.Decimal {
 	if value.IsZero() {
 		return decimal.Zero
 	}
-	guess := value
-	if value.GreaterThan(decimal.NewFromInt(1)) {
-		guess = decimal.NewFromInt(1)
+	input, _, err := big.ParseFloat(value.String(), 10, 512, big.ToNearestEven)
+	if err != nil {
+		return decimal.Zero
 	}
-	two := decimal.NewFromInt(2)
-	for i := 0; i < 32; i++ {
-		guess = guess.Add(value.Div(guess)).Div(two)
-	}
-	return guess
+	text := new(big.Float).SetPrec(512).Sqrt(input).Text('f', 64)
+	text = strings.TrimRight(strings.TrimRight(text, "0"), ".")
+	result, _ := decimal.NewFromString(text)
+	return result
 }

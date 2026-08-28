@@ -13,7 +13,7 @@ export const operations: Array<{ value: Operation; label: string; symbol: string
   { value: 'sqrt', label: 'Square root', symbol: '√', hint: 'Find the positive root', arity: 1 }
 ];
 
-export const defaultApiBaseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080';
+export const defaultApiBaseUrl = import.meta.env.VITE_API_BASE_URL ?? '';
 
 export function isValidDecimal(value: string): boolean {
   if (!value.trim() || value.length > 128 || !/^[+-]?(?:\d+(?:\.\d*)?|\.\d+)$/.test(value)) return false;

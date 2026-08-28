@@ -2,19 +2,18 @@
 
 ## Direction
 
-Restrained, Apple-inspired precision: warm off-white canvas, ink-forward type,
-one quiet blue accent, thin borders, generous rhythm, and a compact focused
-work surface. The memorable detail is the calm result state and excellent error
-recovery, not decoration.
+Restrained, Apple-inspired precision: a soft neutral canvas around one compact
+charcoal calculator, circular gray keys, orange operation keys, clear focus
+rings, and no surrounding product chrome. The memorable detail is familiar
+calculator behavior and excellent error recovery, not decoration.
 
 ## Tokens
 
-- Display: `Sora` or another distinctive geometric sans available locally.
-- Body: `DM Sans` or another readable sans available locally.
-- Mono: `IBM Plex Mono` for operation labels and API-oriented details.
-- Surfaces: warm white canvas, white work surface, cool tinted secondary surface.
-- Text: deep navy ink, muted slate secondary text.
-- Accent: accessible blue for primary actions and focus rings.
+- Display and keys: native system monospace stack for consistent, offline rendering.
+- Body: native system sans-serif stack.
+- Surfaces: soft gray canvas and charcoal calculator body.
+- Text: near-white primary text and muted gray secondary text.
+- Accent: orange operation keys and accessible blue focus rings.
 - Status: distinct accessible green for success and red/amber for errors/warnings.
 - Spacing: 4/8/12/16/24/32/48px rhythm; controls at least 44px tall.
 - Radius: one restrained medium radius for surfaces and controls.
