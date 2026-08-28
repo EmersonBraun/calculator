@@ -68,12 +68,13 @@ export default function App() {
     window.addEventListener('keydown', onKeyDown); return () => window.removeEventListener('keydown', onKeyDown);
   });
 
-  const activeOperation = pending ? `${stored ?? ''} ${symbols[pending]}` : '';
+  const activeOperation = pending ? `${stored ?? ''} ${symbols[pending]}${waiting ? '' : ` ${display}`}` : '';
+  const displayScale = display.length > 26 ? 'very-long' : display.length > 14 ? 'long' : '';
   const button = (text: string, onClick: () => void, className = '', ariaLabel = text) => <button key={`${ariaLabel}-${text}`} type="button" className={`key ${className}`} onClick={onClick} aria-label={ariaLabel} disabled={busy}>{text}</button>;
 
   return <main className="calculator-page" aria-label="Traditional calculator">
     <section className="calculator-wrap" aria-label="Calculator work surface">
-      <div className="display-panel"><div className="expression" aria-hidden="true">{activeOperation || 'Ready'}</div><output className="display" aria-label="Calculator display" aria-live="polite">{display}</output></div>
+      <div className="display-panel"><div className="expression" aria-hidden="true">{activeOperation || 'Ready'}</div><output className={`display ${displayScale}`} aria-label="Calculator display" aria-live="polite">{display}</output></div>
       <div className="keypad" aria-label="Calculator keypad">
         {button('⌫', backspace, 'utility', 'Backspace')}{button('C', clear, 'utility', 'Clear calculator')}{button('%', () => void applyPercentage(), 'utility operator', 'Percentage')}{button('÷', () => chooseOperation('divide'), 'operator', 'Divide')}
         {button('7', () => inputDigit('7'))}{button('8', () => inputDigit('8'))}{button('9', () => inputDigit('9'))}{button('×', () => chooseOperation('multiply'), 'operator', 'Multiply')}
