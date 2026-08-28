@@ -6,7 +6,7 @@
   "contract": {
     "intent": "Validate the local Sezzle calculator artifact, its real Go endpoint, React UI, Docker packaging, documentation, and evidence for the current source revision.",
     "outcomes": [
-      { "id": "logic", "statement": "Exact calculator behavior and stable error handling are covered by deterministic tests.", "checks": ["backend-tests", "frontend-tests", "coverage"] },
+      { "id": "logic", "statement": "Exact calculator behavior and stable error handling are covered by deterministic tests.", "checks": ["logic-check", "backend-tests", "frontend-tests", "coverage"] },
       { "id": "endpoint", "statement": "The real Go service responds to health and calculation requests with the documented contract.", "checks": ["endpoint-smoke"] },
       { "id": "ui", "statement": "The real browser flow is checked at mobile and desktop sizes and awaits human visual approval.", "checks": ["browser-review"] },
       { "id": "delivery", "statement": "The application builds and starts through Docker with frontend-to-API wiring.", "checks": ["builds", "docker-smoke"] },
@@ -23,6 +23,7 @@
     "database": { "required": false, "reason": "The approved product is stateless and has no database." }
   },
   "checks": [
+    { "id": "logic-check", "category": "logic", "command": "cd backend && go test ./... && go vet ./... && cd ../frontend && npm run typecheck", "timeoutMs": 240000 },
     { "id": "backend-tests", "category": "test", "command": "cd backend && go test ./...", "timeoutMs": 180000 },
     { "id": "frontend-tests", "category": "test", "command": "cd frontend && npm test -- --run --coverage", "timeoutMs": 240000 },
     { "id": "coverage", "category": "test", "command": "node scripts/verify-coverage.mjs", "timeoutMs": 30000 },

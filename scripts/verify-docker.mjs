@@ -13,8 +13,8 @@ const run = (args) => new Promise((resolve, reject) => {
 const up = await run(["compose", "up", "--build", "-d"]);
 if (up.code !== 0) throw new Error(`docker compose failed: ${up.stderr || up.stdout}`);
 try {
-  const health = await fetch("http://127.0.0.1:4173/healthz");
-  const result = await fetch("http://127.0.0.1:4173/api/calculate", {
+  const health = await fetch("http://127.0.0.1:4174/healthz");
+  const result = await fetch("http://127.0.0.1:4174/api/calculate", {
     method: "POST",
     headers: { "content-type": "application/json" },
     body: JSON.stringify({ operation: "percentage", operands: ["15", "200"] }),

@@ -20,4 +20,4 @@ services:
       api:
         condition: service_healthy
     ports:
-      - "4173:80"
+      - "4174:80"

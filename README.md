@@ -31,7 +31,7 @@ The Vite client defaults to `http://localhost:8080`. Set
 docker compose up --build
 ```
 
-Open `http://localhost:4173`. The frontend container proxies `/api` and
+Open `http://localhost:4174`. The frontend container proxies `/api` and
 `/healthz` to the healthy Go service.
 
 ## API examples
