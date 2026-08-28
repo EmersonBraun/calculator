@@ -1,0 +1,80 @@
+# Sezzle calculator take-home
+
+Small full-stack calculator built for the Senior Payments Engineer exercise.
+The browser client is React + TypeScript; the API is Go. The service is
+stateless and uses decimal strings at the boundary so values such as `0.1 +
+0.2` remain exact.
+
+## Run locally
+
+Requirements: Go 1.23+, Node.js 22+, and npm.
+
+```bash
+cd backend
+go run ./cmd/server
+```
+
+In a second terminal:
+
+```bash
+cd frontend
+npm ci
+npm run dev
+```
+
+The Vite client defaults to `http://localhost:8080`. Set
+`VITE_API_BASE_URL` if the API runs elsewhere.
+
+## Run with Docker
+
+```bash
+docker compose up --build
+```
+
+Open `http://localhost:4173`. The frontend container proxies `/api` and
+`/healthz` to the healthy Go service.
+
+## API examples
+
+```bash
+curl http://localhost:8080/healthz
+
+curl -X POST http://localhost:8080/api/calculate \
+  -H 'content-type: application/json' \
+  -d '{"operation":"percentage","operands":["15","200"]}'
+```
+
+The complete request, response, operation, decimal, and error contract is in
+[`docs/api-contract.md`](./docs/api-contract.md).
+
+## Quality checks
+
+```bash
+cd backend && gofmt -w . && go test ./... && go vet ./...
+cd frontend && npm test -- --run --coverage && npm run typecheck && npm run build
+cd .. && node scripts/verify-docs.mjs
+```
+
+Coverage is measured independently for the Go and TypeScript layers. The
+target is at least 90% statements per layer. The final harness also checks the
+real endpoint, Docker wiring, and a real-browser review.
+
+## Decisions and limits
+
+The design direction and product boundary are in [`DESIGN.md`](./DESIGN.md)
+and [`PRODUCT.md`](./PRODUCT.md). Architectural trade-offs are recorded in
+[`docs/adr`](./docs/adr), and the lightweight threat model is in
+[`docs/security/threat-model.md`](./docs/security/threat-model.md).
+
+There is intentionally no database, auth, history, payment processing, LLM,
+agent runtime, or cloud deployment. These would add scope without supporting
+the requested calculator behavior.
+
+## AI-assisted work
+
+Development prompts and human verification status are recorded in
+[`PROMPTS.md`](./PROMPTS.md). No AI runtime is included in the product.
+
+## Submission boundary
+
+This copy is local only. It has not been published, uploaded, or submitted.
