@@ -1,13 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;600&family=IBM+Plex+Mono:wght@500;600&display=swap');
 
-:root { font-family: 'DM Sans', sans-serif; color: #f4f6f7; background: #eef0f2; font-synthesis: none; }
+:root { font-family: 'DM Sans', sans-serif; color: #f4f6f7; background: #e9edef; font-synthesis: none; }
 * { box-sizing: border-box; }
 body { min-width: 320px; margin: 0; }
 button { font: inherit; cursor: pointer; }
 
-.calculator-page { min-height: 100dvh; display: grid; place-items: center; padding: 20px; }
+.calculator-page { position: relative; isolation: isolate; min-height: 100dvh; display: grid; place-items: center; padding: 20px; overflow: hidden; }
+.calculator-page::before { content: ''; position: fixed; z-index: -1; top: -190px; left: 50%; width: 460px; height: 460px; border-radius: 50%; background: #dce4e8; filter: blur(70px); opacity: .72; transform: translateX(-50%); pointer-events: none; }
 .calculator-wrap {
-  width: min(100%, 390px);
+  width: min(100%, 390px, calc((100dvh - 20px) / 1.68));
   padding: 18px 18px 16px;
   border: 1px solid #343c42;
   border-radius: 26px;
@@ -16,9 +17,11 @@ button { font: inherit; cursor: pointer; }
 }
 .display-panel { min-height: 104px; padding: 6px 7px 19px; display: flex; flex-direction: column; justify-content: flex-end; }
 .expression { min-height: 17px; overflow: hidden; color: #9ca8ae; text-align: right; text-overflow: ellipsis; font: 500 11px 'IBM Plex Mono', monospace; white-space: nowrap; }
-.display { display: block; overflow: hidden; color: #f5f7f8; text-align: right; text-overflow: ellipsis; font: 500 clamp(34px, 11vw, 54px)/1.05 'IBM Plex Mono', monospace; letter-spacing: -.08em; white-space: nowrap; }
-.display.long { font-size: clamp(27px, 8vw, 42px); }
-.display.very-long { font-size: clamp(18px, 5.5vw, 30px); letter-spacing: -.06em; }
+.display { display: block; overflow-x: auto; overflow-y: hidden; color: #f5f7f8; text-align: right; text-overflow: clip; font: 500 clamp(34px, 11vw, 54px)/1.05 'IBM Plex Mono', monospace; letter-spacing: -.08em; white-space: nowrap; scrollbar-width: none; }
+.display::-webkit-scrollbar { display: none; }
+.display.long { font-size: clamp(25px, 7.5vw, 38px); }
+.display.very-long { font-size: clamp(18px, 5.5vw, 27px); letter-spacing: -.06em; }
+.display.ultra-long { font-size: 14px; letter-spacing: -.05em; }
 
 .keypad { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 9px; }
 .key { width: 100%; aspect-ratio: 1; min-height: 0; padding: 0; border: 1px solid #6d767c; border-radius: 50%; color: #f5f7f8; background: #596268; box-shadow: 0 2px 0 rgba(0, 0, 0, .18), inset 0 1px 0 rgba(255, 255, 255, .08); font: 500 clamp(17px, 5vw, 22px) 'IBM Plex Mono', monospace; transition: transform .1s, filter .1s; }
@@ -26,6 +29,7 @@ button { font: inherit; cursor: pointer; }
 .key:active:not(:disabled) { transform: scale(.95); }
 .key:focus-visible, .scientific-key:focus-visible { position: relative; z-index: 1; outline: 3px solid #8bb5ff; outline-offset: 3px; }
 .key.utility { color: #f0f3f4; border-color: #8e989d; background: #7a8388; font-size: clamp(15px, 4vw, 19px); }
+.key.backspace { font-size: clamp(23px, 6vw, 29px); }
 .key.operator, .key.equals { border-color: #ffb21b; color: #fff; background: #f4a000; }
 .key.operator:hover:not(:disabled), .key.equals:hover:not(:disabled) { filter: brightness(1.1); }
 .key.decimal { font-size: clamp(22px, 6vw, 28px); }
@@ -45,6 +49,15 @@ button { font: inherit; cursor: pointer; }
   .display-panel { min-height: 88px; padding-bottom: 14px; }
   .keypad { gap: 7px; }
   .scientific { margin-top: 12px; padding-top: 10px; }
+}
+
+@media (max-height: 620px) {
+  .calculator-page { padding: 8px; }
+  .calculator-wrap { padding: 10px 11px 10px; }
+  .display-panel { min-height: 76px; padding-bottom: 11px; }
+  .keypad { gap: 5px; }
+  .scientific { margin-top: 9px; padding-top: 8px; }
+  .scientific-key { height: 28px; min-height: 28px; }
 }
 
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration: .01ms !important; } }

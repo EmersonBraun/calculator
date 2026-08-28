@@ -69,14 +69,14 @@ export default function App() {
   });
 
   const activeOperation = pending ? `${stored ?? ''} ${symbols[pending]}${waiting ? '' : ` ${display}`}` : '';
-  const displayScale = display.length > 26 ? 'very-long' : display.length > 14 ? 'long' : '';
+  const displayScale = display.length > 32 ? 'ultra-long' : display.length > 24 ? 'very-long' : display.length > 12 ? 'long' : '';
   const button = (text: string, onClick: () => void, className = '', ariaLabel = text) => <button key={`${ariaLabel}-${text}`} type="button" className={`key ${className}`} onClick={onClick} aria-label={ariaLabel} disabled={busy}>{text}</button>;
 
   return <main className="calculator-page" aria-label="Traditional calculator">
     <section className="calculator-wrap" aria-label="Calculator work surface">
       <div className="display-panel"><div className="expression" aria-hidden="true">{activeOperation || 'Ready'}</div><output className={`display ${displayScale}`} aria-label="Calculator display" aria-live="polite">{display}</output></div>
       <div className="keypad" aria-label="Calculator keypad">
-        {button('⌫', backspace, 'utility', 'Backspace')}{button('C', clear, 'utility', 'Clear calculator')}{button('%', () => void applyPercentage(), 'utility operator', 'Percentage')}{button('÷', () => chooseOperation('divide'), 'operator', 'Divide')}
+        {button('⌫', backspace, 'utility backspace', 'Backspace')}{button('C', clear, 'utility', 'Clear calculator')}{button('%', () => void applyPercentage(), 'utility operator', 'Percentage')}{button('÷', () => chooseOperation('divide'), 'operator', 'Divide')}
         {button('7', () => inputDigit('7'))}{button('8', () => inputDigit('8'))}{button('9', () => inputDigit('9'))}{button('×', () => chooseOperation('multiply'), 'operator', 'Multiply')}
         {button('4', () => inputDigit('4'))}{button('5', () => inputDigit('5'))}{button('6', () => inputDigit('6'))}{button('−', () => chooseOperation('subtract'), 'operator', 'Subtract')}
         {button('1', () => inputDigit('1'))}{button('2', () => inputDigit('2'))}{button('3', () => inputDigit('3'))}{button('+', () => chooseOperation('add'), 'operator', 'Add')}
