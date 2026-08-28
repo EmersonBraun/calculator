@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "project": "sezzle-calculator-takehome",
+  "root": "..",
+  "profile": "strict",
+  "contract": {
+    "intent": "Validate the local Sezzle calculator artifact, its real Go endpoint, React UI, Docker packaging, documentation, and evidence for the current source revision.",
+    "outcomes": [
+      { "id": "logic", "statement": "Exact calculator behavior and stable error handling are covered by deterministic tests.", "checks": ["backend-tests", "frontend-tests", "coverage"] },
+      { "id": "endpoint", "statement": "The real Go service responds to health and calculation requests with the documented contract.", "checks": ["endpoint-smoke"] },
+      { "id": "ui", "statement": "The real browser flow is checked at mobile and desktop sizes and awaits human visual approval.", "checks": ["browser-review"] },
+      { "id": "delivery", "statement": "The application builds and starts through Docker with frontend-to-API wiring.", "checks": ["builds", "docker-smoke"] },
+      { "id": "docs", "statement": "The approved scope, contract, design, threat model, decisions, and AI prompt log are present and consistent.", "checks": ["docs-check", "diff-clean"] }
+    ]
+  },
+  "surfaces": {
+    "logic": true,
+    "cli": { "required": false, "reason": "The product has no CLI surface." },
+    "mcp": { "required": false, "reason": "The product has no MCP surface; MCP is outside the take-home scope." },
+    "ui": true,
+    "docs": true,
+    "endpoint": true,
+    "database": { "required": false, "reason": "The approved product is stateless and has no database." }
+  },
+  "checks": [
+    { "id": "backend-tests", "category": "test", "command": "cd backend && go test ./...", "timeoutMs": 180000 },
+    { "id": "frontend-tests", "category": "test", "command": "cd frontend && npm test -- --run --coverage", "timeoutMs": 240000 },
+    { "id": "coverage", "category": "test", "command": "node scripts/verify-coverage.mjs", "timeoutMs": 30000 },
+    { "id": "builds", "category": "build", "command": "cd backend && go vet ./... && cd ../frontend && npm run typecheck && npm run build", "timeoutMs": 240000 },
+    { "id": "endpoint-smoke", "category": "endpoint", "execution": "real", "command": "node scripts/verify-endpoint.mjs", "timeoutMs": 120000 },
+    { "id": "docker-smoke", "category": "endpoint", "execution": "real", "command": "node scripts/verify-docker.mjs", "timeoutMs": 240000 },
+    { "id": "browser-review", "category": "ui", "execution": "real", "command": "node scripts/browser-evidence.mjs", "timeoutMs": 180000 },
+    { "id": "docs-check", "category": "docs", "command": "node scripts/verify-docs.mjs", "timeoutMs": 30000 },
+    { "id": "diff-clean", "category": "custom", "command": "git diff --check", "timeoutMs": 30000 }
+  ],
+  "tracking": { "required": false, "authorization": "not-required", "reason": "The user approved local implementation only; no external issue, PR, upload, or submission is authorized." },
+  "cleanup": { "roots": [".codex/verification/tmp"] }
+}
